@@ -1,0 +1,28 @@
+#if UNITY_EDITOR
+
+using UnityEditor;
+
+[CustomEditor(typeof(Life))]
+public class LifeEditor : Editor 
+{
+    private Life life;
+    public override void OnInspectorGUI() {
+        base.OnInspectorGUI();
+        life = (Life)target;
+
+        life.useScriptable = EditorGUILayout.Toggle("Use Scriptable?", life.useScriptable);
+        
+        if (life.useScriptable)
+        {
+            life.lifeScriptable = (ScriptableInteger) EditorGUILayout.ObjectField("Life", life.lifeScriptable, typeof(ScriptableInteger), true);
+            life.maxlifeScriptable = (ScriptableInteger) EditorGUILayout.ObjectField("MaxLife", life.maxlifeScriptable, typeof(ScriptableInteger), true);
+
+        }
+        else
+        {
+            life.life = EditorGUILayout.IntField("Life", life.life);
+            life.maxlife = EditorGUILayout.IntField("Max Life", life.maxlife);
+        }
+    }
+}
+#endif
